@@ -1,0 +1,16 @@
+﻿* {
+    color: steelblue;
+}
+
+.alignment {
+    width: 1200px;
+}
+
+table {
+    border-spacing: 0 15px;
+    margin-top: -15px;
+}
+
+.ErrorMessage {
+    color: red;
+}
