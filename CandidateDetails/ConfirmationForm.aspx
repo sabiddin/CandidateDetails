@@ -20,59 +20,6 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <%--<div>
-            <h1>Please Confirm Your Personal Details:</h1>
-            First Name:&nbsp<%=Session["FirstName"] %>
-            <br />
-            <br />
-            Last Name:&nbsp<%=Session["LastName"] %>
-            <br />
-            <br />
-            EmailID:&nbsp<%=Session["Email ID"] %>
-            <br />
-            <br />
-            Alternate EmailID:&nbsp<%=Session["Alternate Email ID"] %>
-            <br />
-            <br />
-            Candidate Status:&nbsp<%=Session["Candidate Status"] %>
-            <br />
-            <br />
-            Phone Home:&nbsp<%=Session["Phone Home"] %>
-            <br />
-            <br />
-            Phone Cell:&nbsp<%=Session["Phone Cell"] %>
-            <br />
-            <br />
-            Phone Work:&nbsp<%=Session["Phone Work"] %>
-            <br />
-            <br />
-            Address1:&nbsp<%=Session["Address 1"] %>
-            <br />
-            <br />
-            Address2:&nbsp<%=Session["Address 2"] %>
-            <br />
-            <br />
-            Country:&nbsp<%=Session["Country"] %>
-            <br />
-            <br />
-            State:&nbsp<%=Session["State"] %>
-            <br />
-            <br />
-            City:&nbsp<%=Session["City"] %>
-            <br />
-            <br />
-            Zip Code:&nbsp<%=Session["Zip Code"] %>
-            <br />
-            <br />
-            <asp:Label Text="" ID="lblConfirmMessage" runat="server" />
-            <br />
-            <asp:RadioButtonList ID="rblConfirm" runat="server">
-                <asp:ListItem>Yes</asp:ListItem>
-                <asp:ListItem>No</asp:ListItem>
-            </asp:RadioButtonList>
-            <asp:Button Text="Confirm" ID="btnConfirm" OnClick="btnConfirm_Click" runat="server" />
-        </div>--%>
-
         <div>
             <h1>Please Confirm Your Personal Details:</h1>
             <table>

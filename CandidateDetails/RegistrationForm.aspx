@@ -220,10 +220,7 @@
             <asp:Label Text="" ID="lblDisplay" ForeColor="#ff9933" runat="server" />--%>
         </div>
     </form>
-    <script>             
-        $(function () {
-            getCountries();
-        });
+    <script>                   
         function onCountriesAjaxComplete(results) {
             if (results !== null) {
                 var ddlCountry = $("#ddlCountry");

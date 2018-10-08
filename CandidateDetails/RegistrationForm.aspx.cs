@@ -20,6 +20,11 @@ public partial class RegistrationForm : System.Web.UI.Page
 
     private void Initialize()
     {
+        ddlCountry.DataSource = LookupBusiness.GetCountries();
+        ddlCountry.DataValueField = "Code";
+        ddlCountry.DataTextField = "Value";
+        ddlCountry.DataBind();
+
         Candidate candidate = Session["Candidate"] as Candidate;
         if (candidate!=null)
         {         
@@ -36,11 +41,7 @@ public partial class RegistrationForm : System.Web.UI.Page
             txtCity.Text = candidate.City;
             txtZipCode.Text = candidate.ZipCode;
 
-
-            ddlCountry.DataSource = LookupBusiness.GetCountries();
-            ddlCountry.DataValueField = "Code";
-            ddlCountry.DataTextField = "Value";
-            ddlCountry.DataBind();
+          
             ddlCountry.SelectedValue = candidate.CountryCode.ToString();            
             hdnCountryCode.Value = candidate.CountryCode.ToString();
             hdnCountryValue.Value = candidate.CountryValue;
