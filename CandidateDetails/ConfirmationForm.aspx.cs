@@ -54,7 +54,9 @@ public partial class ConfirmationForm : System.Web.UI.Page
         }
         else if (rblConfirm.SelectedValue == "No")
         {
-            Response.Redirect("RegistrationForm.aspx");
+            //Response.Redirect("RegistrationForm.aspx");
+            //redirecting to the new form.
+            Response.Redirect("RegistrationForm_v1.aspx");
         }
     }
 }
