@@ -178,7 +178,33 @@
                         <asp:TextBox ID="txtAddress2" runat="server" Width="200px" />
                     </td>
                 </tr>
-                <tr>
+                 <tr>
+                    <td>
+                        <asp:Label Text="Country" ID="lblCountryLabel" runat="server" />
+                    </td>
+                    <td>
+                        <asp:RadioButtonList runat="server" ID="rdoCountry" RepeatColumns="3" RepeatDirection="Horizontal">
+                            <asp:ListItem Text="Select a country" Value="-1" />
+                            <asp:ListItem Text="US" Value ="0"/>
+                            <asp:ListItem Text="UK" Value ="1"/>
+                            <asp:ListItem Text="Canada" Value ="2"/>
+
+                        </asp:RadioButtonList>
+                         <asp:HiddenField ID="hdnCountryCode" runat="server" />
+                        <asp:HiddenField ID="hdnCountryValue" runat="server" />
+                    </td>
+                    <td>
+                        <asp:Label Text="State" ID="lblStateLabel" runat="server" />
+                    </td>
+                    <td>
+                        <asp:RadioButtonList runat="server" ID="rdoStates" RepeatColumns="3" RepeatDirection="Horizontal">
+                            <asp:ListItem Text="Select a state" />
+                        </asp:RadioButtonList>
+                          <asp:HiddenField ID="hdnStateID" runat="server" />
+                        <asp:HiddenField ID="hdnStateName" runat="server" />
+                    </td>
+                </tr>  
+              <%--  <tr>
                     <td>
                         <asp:Label Text="Country" ID="lblCountry" runat="server" />
                     </td>
@@ -198,7 +224,7 @@
                         <asp:HiddenField ID="hdnStateID" runat="server" />
                         <asp:HiddenField ID="hdnStateName" runat="server" />
                     </td>
-                </tr>
+                </tr>--%>
                 <tr>
                     <td>
                         <asp:Label Text="City" ID="lblCity" runat="server" />
@@ -213,42 +239,7 @@
                         <asp:TextBox ID="txtZipCode" runat="server" Width="200px" />
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <asp:Label Text="Country" ID="lblCountryLabel" runat="server" />
-                    </td>
-                    <td>
-                        <asp:RadioButtonList runat="server" ID="rdoCountry">
-                            <asp:ListItem Text="Select a country" Value="-1" />
-                            <asp:ListItem Text="US" Value ="0"/>
-                            <asp:ListItem Text="UK" Value ="1"/>
-                            <asp:ListItem Text="Canada" Value ="2"/>
-
-                        </asp:RadioButtonList>
-                        <asp:HiddenField ID="hdnRdoCountryCode" runat="server" />
-                        <asp:HiddenField ID="hdnRdoCountryValue" runat="server" />
-                    </td>
-                    <td>
-                        <asp:Label Text="State" ID="lblStateLabel" runat="server" />
-                    </td>
-                    <td>
-                        <asp:RadioButtonList runat="server" ID="rdoStates">
-                            <asp:ListItem Text="Select a state" />
-                        </asp:RadioButtonList>
-                        <asp:HiddenField ID="hdnRdoStateId" runat="server" />
-                        <asp:HiddenField ID="hdnRdoStateName" runat="server" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Country
-                    </td>
-                    <td>
-                        <div id ="rdoCountryList"></div>
-                    </td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                            
             </table>
             <asp:Button Text="Create" ID="btnCreate" OnClick="btnCreate_Click" OnClientClick="Validate()" runat="server" />
             <%--<asp:Label Text="" ID="lblMessage" ForeColor="#ff9933" runat="server" />
@@ -256,69 +247,7 @@
             <asp:Label Text="" ID="lblDisplay" ForeColor="#ff9933" runat="server" />--%>
         </div>
     </form>
-    <script>  
-        var countries = [
-                {
-                    Code: 1,
-                    Value: "United States"                   
-                },
-                {
-                    Code: 2,
-                    Value: "United Kingdom"
-                },
-                {
-                    Code: 3,
-                    Value: "India"
-                }
-            ]; 
-        $(function () {
-            //buildRadioButtonList();
-            fillCountries();
-        });
-        function onCountriesAjaxComplete(results) {
-            if (results !== null) {
-                var ddlCountry = $("#ddlCountry");
-                ddlCountry.html('');
-                var options = "<option value='-1'>Select</option>";
-                for (var i = 0; i < results.length; i++) {
-                    options += "<option value='" + results[i].Code + "'>" + results[i].Value + "</option>";
-                }
-                ddlCountry.html(options);
-            }
-        }
-        $("#ddlCountry").change(function () {
-            var selectedOption = $("#ddlCountry :selected");
-            var countryCode = selectedOption.val();
-            var countryValue = selectedOption.text();
-            var hdnCountryCode = $('#hdnCountryCode');
-            var hdnCountryValue = $('#hdnCountryValue');
-            hdnCountryCode.val(countryCode);
-            hdnCountryValue.val(countryValue);
-            getStates(countryCode);
-        });
-        function onStatesAjaxComplete(results) {
-            if (results !== null) {
-                var ddlStates = $("#ddlState");
-                ddlStates.html('');
-                var options = "<option value='-1'>Select</option>";
-                for (var i = 0; i < results.length; i++) {
-                    options += "<option value='" + results[i].StateID + "'>" + results[i].StateName + "</option>";
-                }
-                ddlStates.html(options);
-            }
-        }
-        function getCountries() {
-            $.ajax({
-                type: "GET",
-                url: "/Ajax/LookupAjaxService.asmx/GetCountries",
-                data: "",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (data) {
-                    onCountriesAjaxComplete(data.d);
-                }
-            });
-        }
+    <script>                               
         function getStates(countryId) {
             $.ajax({
                 type: "GET",
@@ -331,34 +260,60 @@
                 }
             });
         }
-
-        $("#ddlState").change(function () {
-            var selectedOption = $("#ddlState :selected");
-            var stateID = selectedOption.val();
-            var stateName = selectedOption.text();
-            var hdnStateID = $('#hdnStateID');
-            var hdnStateName = $('#hdnStateName');
-            hdnStateID.val(stateID);
-            hdnStateName.val(stateName);
-        });
-       
-        $('#rdoCountryList input').change(function () {
-            var item = this.value;
-        });
+        function getStatesForRadioButtonList(countryId) {
+            $.ajax({
+                type: "GET",
+                url: "/Ajax/LookupAjaxService.asmx/GetStates?countryId=" + countryId,
+                data: "",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    fillStates(data.d);
+                }
+            });
+        }         
 
         function fillCountries() {
             $('#rdoCountry').html("");
             var i = 0;
             $.each(countries, function () {
-
-                var rdb = "<input id=RadioButton" + i + " type=radio name=rdoCountry value=" + this.Code + " /><label for=RadioButton" + i + ">" + this.Value + "</label>";
-
+                var rdb = "<input id=RadioButton" + i + " type=radio onchange=onCountryChange(this) name=rdoCountry class=country value=" +
+                    this.Code + " /><label for=RadioButton" + i + ">" +  this.Value + "</label>";
                 $('#rdoCountry').append(rdb);
-
                 i++;
-
             });
 
+        }
+
+         function fillStates(states) {
+            $('#rdoStates').html("");
+            var i = 0;
+             $.each(states, function () {
+                 var rdb = "<input id=rdoStates_" + i + " onchange=onStateChange(this) type=radio name=rdoStates class=country value=" + this.StateID + " /><label for=RadioButton" + i + ">" + this.StateName + "</label>";
+                $('#rdoStates').append(rdb);
+                i++;
+            });
+
+        }
+        $('#rdoCountry').change(function (opt) {             
+            var countryCode = opt.target.value;
+            var countryValue = opt.target.nextSibling.innerText;
+            var hdnCountryCode = $('#hdnCountryCode');
+            var hdnCountryValue = $('#hdnCountryValue');
+            hdnCountryCode.val(countryCode);
+            hdnCountryValue.val(countryValue);
+            getStatesForRadioButtonList(countryCode);    
+        });
+        function onCountryChange(rdoCountry) {            
+            getStatesForRadioButtonList(rdoCountry.value);
+        }
+        function onStateChange(rdoState) {                        
+            var stateID = rdoState.value;
+            var stateName = rdoState.nextSibling.innerText;
+            var hdnStateID = $('#hdnStateID');
+            var hdnStateName = $('#hdnStateName');
+            hdnStateID.val(stateID);
+            hdnStateName.val(stateName);
         }
 
     </script>

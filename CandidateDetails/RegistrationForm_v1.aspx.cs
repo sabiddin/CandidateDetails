@@ -21,14 +21,23 @@ public partial class RegistrationForm_v1 : System.Web.UI.Page
 
     private void Initialize()
     {
-        ddlCountry.DataSource = LookupBusiness.GetCountries();
-        ddlCountry.DataValueField = "Code";
-        ddlCountry.DataTextField = "Value";
-        ddlCountry.DataBind();
+        
+
+        rdoCountry.DataSource = LookupBusiness.GetCountries();
+        rdoCountry.DataValueField = "Code";
+        rdoCountry.DataTextField = "Value";
+        rdoCountry.DataBind();
 
         Candidate candidate = Session["Candidate"] as Candidate;
         if (candidate != null)
         {
+            rdoCountry.SelectedValue = candidate.CountryCode.ToString();
+            rdoStates.DataSource = LookupBusiness.GetStates(candidate.CountryCode);
+            rdoStates.DataValueField = "StateID";
+            rdoStates.DataTextField = "StateName";
+            rdoStates.DataBind();
+            rdoStates.SelectedValue = candidate.StateID.ToString();
+
             txtFirstName.Text = candidate.FirstName;
             txtLastName.Text = candidate.LastName;
             txtEmailID.Text = candidate.EmailID;
@@ -43,16 +52,12 @@ public partial class RegistrationForm_v1 : System.Web.UI.Page
             txtZipCode.Text = candidate.ZipCode;
 
 
-            ddlCountry.SelectedValue = candidate.CountryCode.ToString();
+
             hdnCountryCode.Value = candidate.CountryCode.ToString();
             hdnCountryValue.Value = candidate.CountryValue;
 
 
-            ddlState.DataSource = LookupBusiness.GetStates(candidate.CountryCode);
-            ddlState.DataValueField = "StateID";
-            ddlState.DataTextField = "StateName";
-            ddlState.DataBind();
-            ddlState.SelectedValue = candidate.StateID.ToString();
+
             hdnStateID.Value = candidate.StateID.ToString();
             hdnStateName.Value = candidate.StateName.ToString();
 
