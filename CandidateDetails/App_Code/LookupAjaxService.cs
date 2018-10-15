@@ -19,10 +19,29 @@ public class LookupAjaxService : System.Web.Services.WebService
     {
         return LookupBusiness.GetCountries();
     }
-    [WebMethod]
+    [WebMethod (EnableSession = true)]
     [ScriptMethod(UseHttpGet = true, ResponseFormat = ResponseFormat.Json)]
     public List<State> GetStates(int countryID)
     {
         return LookupBusiness.GetStates(countryID);
+    }
+
+    [WebMethod(EnableSession = true)]
+    [ScriptMethod(UseHttpGet = false, ResponseFormat = ResponseFormat.Json)]
+    public bool ValidateOldPasswords(string newPassword)
+    {
+        bool isValid = true;
+        //if(Session["Candidate"] !=null)
+        //{
+            List<string> oldPasswords = new List<string>();
+            oldPasswords = Session["OldPasswords"] as List<string>;
+
+            if (oldPasswords.Contains(newPassword))
+            {
+                isValid = false;
+            }
+        //}
+        return isValid;
+
     }
 }

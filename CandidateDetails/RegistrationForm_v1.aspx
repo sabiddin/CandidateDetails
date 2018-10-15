@@ -39,6 +39,36 @@
                 </tr>
                 <tr>
                     <td>
+                        <asp:Label Text="User Name" ID="lblUserName" runat="server" />
+                        <asp:Label Text="*" ForeColor="Red" runat="server" />
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtUserName" runat="server" Width="200px" />
+                        <br />
+                        <asp:RequiredFieldValidator ID="rfvUserName" ErrorMessage="Please Enter User Name" ControlToValidate="txtUserName"
+                            ClientIDMode="Static" CssClass="ErrorMessage" runat="server" />
+                    </td>
+                    <td>
+                        <asp:Label Text="Password" ID="lblPassword" runat="server" />
+                        <asp:Label Text="*" ForeColor="Red" runat="server" />
+                    </td>
+                    <td>
+                        <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" Width="200px" />
+                        <asp:CustomValidator ErrorMessage="Password can be from your old passwords" Display="Dynamic"
+                            ControlToValidate="txtPassword" EnableClientScript="true" ClientValidationFunction="ValidatePassword" runat="server" />
+                        
+                        <br />
+                        
+                        <asp:RegularExpressionValidator ID="revPassword" ErrorMessage="Password should be in between 8-12 characters with one capital letter, one digit and special character"
+                            ControlToValidate="txtPassword" ValidationExpression="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,12}$"
+                            CssClass="ErrorMessage" runat="server" />
+                        <asp:RequiredFieldValidator ID="rfvPassword" ErrorMessage="Please Enter Password" ControlToValidate="txtPassword"
+                            ClientIDMode="Static" CssClass="ErrorMessage" runat="server" />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <asp:Label Text="Email ID" ID="lblEmailID" runat="server" />
                         <asp:Label Text="*" ForeColor="Red" runat="server" />
                     </td>
@@ -81,7 +111,7 @@
                     <td>
                         <asp:TextBox ID="txtPhoneHome" runat="server" Width="200px" />
                         <br />
-                        <asp:RequiredFieldValidator ID="rfvPhoneHome" ErrorMessage="Pleas Enter Phone Home" ClientIDMode="Static" ControlToValidate="txtPhoneHome" CssClass="ErrorMessage" runat="server" />
+                        <asp:RequiredFieldValidator ID="rfvPhoneHome" ErrorMessage="Please Enter Phone Home" ClientIDMode="Static" ControlToValidate="txtPhoneHome" CssClass="ErrorMessage" runat="server" />
                         <%--Valid phone number series for the expression:
 
                         123-456-7890
@@ -178,19 +208,19 @@
                         <asp:TextBox ID="txtAddress2" runat="server" Width="200px" />
                     </td>
                 </tr>
-                 <tr>
+                <tr>
                     <td>
                         <asp:Label Text="Country" ID="lblCountryLabel" runat="server" />
                     </td>
                     <td>
                         <asp:RadioButtonList runat="server" ID="rdoCountry" RepeatColumns="3" RepeatDirection="Horizontal">
                             <asp:ListItem Text="Select a country" Value="-1" />
-                            <asp:ListItem Text="US" Value ="0"/>
-                            <asp:ListItem Text="UK" Value ="1"/>
-                            <asp:ListItem Text="Canada" Value ="2"/>
+                            <asp:ListItem Text="US" Value="0" />
+                            <asp:ListItem Text="UK" Value="1" />
+                            <asp:ListItem Text="Canada" Value="2" />
 
                         </asp:RadioButtonList>
-                         <asp:HiddenField ID="hdnCountryCode" runat="server" />
+                        <asp:HiddenField ID="hdnCountryCode" runat="server" />
                         <asp:HiddenField ID="hdnCountryValue" runat="server" />
                     </td>
                     <td>
@@ -200,11 +230,11 @@
                         <asp:RadioButtonList runat="server" ID="rdoStates" RepeatColumns="3" RepeatDirection="Horizontal">
                             <asp:ListItem Text="Select a state" />
                         </asp:RadioButtonList>
-                          <asp:HiddenField ID="hdnStateID" runat="server" />
+                        <asp:HiddenField ID="hdnStateID" runat="server" />
                         <asp:HiddenField ID="hdnStateName" runat="server" />
                     </td>
-                </tr>  
-              <%--  <tr>
+                </tr>
+                <%--  <tr>
                     <td>
                         <asp:Label Text="Country" ID="lblCountry" runat="server" />
                     </td>
@@ -239,7 +269,7 @@
                         <asp:TextBox ID="txtZipCode" runat="server" Width="200px" />
                     </td>
                 </tr>
-                            
+
             </table>
             <asp:Button Text="Create" ID="btnCreate" OnClick="btnCreate_Click" OnClientClick="Validate()" runat="server" />
             <%--<asp:Label Text="" ID="lblMessage" ForeColor="#ff9933" runat="server" />
@@ -271,43 +301,43 @@
                     fillStates(data.d);
                 }
             });
-        }         
+        }
 
         function fillCountries() {
             $('#rdoCountry').html("");
             var i = 0;
             $.each(countries, function () {
                 var rdb = "<input id=RadioButton" + i + " type=radio onchange=onCountryChange(this) name=rdoCountry class=country value=" +
-                    this.Code + " /><label for=RadioButton" + i + ">" +  this.Value + "</label>";
+                    this.Code + " /><label for=RadioButton" + i + ">" + this.Value + "</label>";
                 $('#rdoCountry').append(rdb);
                 i++;
             });
 
         }
 
-         function fillStates(states) {
+        function fillStates(states) {
             $('#rdoStates').html("");
             var i = 0;
-             $.each(states, function () {
-                 var rdb = "<input id=rdoStates_" + i + " onchange=onStateChange(this) type=radio name=rdoStates class=country value=" + this.StateID + " /><label for=RadioButton" + i + ">" + this.StateName + "</label>";
+            $.each(states, function () {
+                var rdb = "<input id=rdoStates_" + i + " onchange=onStateChange(this) type=radio name=rdoStates class=country value=" + this.StateID + " /><label for=RadioButton" + i + ">" + this.StateName + "</label>";
                 $('#rdoStates').append(rdb);
                 i++;
             });
 
         }
-        $('#rdoCountry').change(function (opt) {             
+        $('#rdoCountry').change(function (opt) {
             var countryCode = opt.target.value;
             var countryValue = opt.target.nextSibling.innerText;
             var hdnCountryCode = $('#hdnCountryCode');
             var hdnCountryValue = $('#hdnCountryValue');
             hdnCountryCode.val(countryCode);
             hdnCountryValue.val(countryValue);
-            getStatesForRadioButtonList(countryCode);    
+            getStatesForRadioButtonList(countryCode);
         });
-        function onCountryChange(rdoCountry) {            
+        function onCountryChange(rdoCountry) {
             getStatesForRadioButtonList(rdoCountry.value);
         }
-        function onStateChange(rdoState) {                        
+        function onStateChange(rdoState) {
             var stateID = rdoState.value;
             var stateName = rdoState.nextSibling.innerText;
             var hdnStateID = $('#hdnStateID');
@@ -351,6 +381,23 @@
         //    var lblError = document.getElementById("lblError");
         //    lblError.innerText = "";
         //}
+
+        function ValidatePassword(source, args) {
+            var isValid = true;
+            var password = args.Value;
+            $.ajax({
+                type: "POST",               
+                url: "/Ajax/LookupAjaxService.asmx/ValidateOldPasswords",
+                data: "{'newPassword':'"+password+"'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    args.IsValid = data.d;
+                    return;
+                }
+            });
+            args.IsValid = isValid;
+        }
     </script>
 </body>
 </html>

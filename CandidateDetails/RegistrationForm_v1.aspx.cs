@@ -21,7 +21,7 @@ public partial class RegistrationForm_v1 : System.Web.UI.Page
 
     private void Initialize()
     {
-        
+        Session["OldPasswords"] = new List<string> { "Password@1", "Password@2", "Password@3" };
 
         rdoCountry.DataSource = LookupBusiness.GetCountries();
         rdoCountry.DataValueField = "Code";
@@ -59,8 +59,7 @@ public partial class RegistrationForm_v1 : System.Web.UI.Page
 
 
             hdnStateID.Value = candidate.StateID.ToString();
-            hdnStateName.Value = candidate.StateName.ToString();
-
+            hdnStateName.Value = candidate.StateName.ToString();            
 
         }
     }
