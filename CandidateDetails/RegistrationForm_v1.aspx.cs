@@ -91,4 +91,17 @@ public partial class RegistrationForm_v1 : System.Web.UI.Page
             Response.Redirect("ConfirmationForm.aspx");
         }
     }
+  
+    protected void cvValidatePasswords_ServerValidate(object source, ServerValidateEventArgs args)
+    {
+        var oldPasswords = Session["OldPasswords"] as List<string>;
+        if (oldPasswords.Contains(args.Value))
+        {
+            args.IsValid = false;
+        }
+        else
+        {
+            args.IsValid = true;
+        }
+    }
 }

@@ -54,8 +54,8 @@
                     </td>
                     <td>
                         <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" Width="200px" />
-                        <asp:CustomValidator ErrorMessage="Password can be from your old passwords" Display="Dynamic"
-                            ControlToValidate="txtPassword" EnableClientScript="true" ClientValidationFunction="ValidatePassword" runat="server" />
+                        <asp:CustomValidator ErrorMessage="Password cannot be from your old passwords" Display="Dynamic" ForeColor="Red"
+                            ControlToValidate="txtPassword" ID="cvValidatePasswords" OnServerValidate="cvValidatePasswords_ServerValidate"  EnableClientScript="true" ClientValidationFunction="ValidatePassword" runat="server" />
                         
                         <br />
                         
@@ -393,10 +393,10 @@
                 dataType: "json",
                 success: function (data) {
                     args.IsValid = data.d;
-                    return;
+                    if (!args.IsValid)
+                        $('#cvValidatePasswords').show();
                 }
-            });
-            args.IsValid = isValid;
+            });            
         }
     </script>
 </body>
